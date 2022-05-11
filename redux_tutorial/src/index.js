@@ -3,36 +3,45 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
+import allReducers from "./reducers";
+import { Provider } from "react-redux";
 
 //Store - Globalized state
 
 //Action - A function telling us what we gonna do
-const increment = () => {
-  return {
-    type: "INCREMENT",
-  };
-};
+// const increment = () => {
+//   return {
+//     type: "INCREMENT",
+//   };
+// };
 
 //Reducer - takes a look at the actions, depending on the actions, change the state
 //Function that changes the state
-const counterReducer = (state = 0, action) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
-  }
-};
+// const counterReducer = (state = 0, action) => {
+//   switch (action.type) {
+//     case "INCREMENT":
+//       return state + 1;
+//     case "DECREMENT":
+//       return state - 1;
+//   }
+// };
 
 //Dispatch - send action to reducer
-dispatchEvent("INCREMENT");
+// let store = createStore(counterReducer);
+// store.subscribe(() => console.log(store.getState()));
+// store.dispatch(increment());
 
-let store = createStore(counterReducer);
+const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
